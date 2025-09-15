@@ -1,0 +1,324 @@
+:root {
+    --primary-color: #007bff;
+    --primary-hover-color: #0056b3;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --border-color: #ddd;
+    --border-radius: 8px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 6rem 2rem 2rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.mode-switcher {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.mode-switcher button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    color: var(--primary-color);
+}
+
+.mode-switcher button.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.mode-switcher button:first-child {
+    border-right: 1px solid var(--border-color);
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.upload-section {
+    margin: 2rem 0;
+}
+
+#pdf-upload, #pdf-upload-merge {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    width: calc(100% - 1rem);
+}
+
+#processing-section,
+#result-section,
+#processing-section-merge,
+#result-section-merge {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+#pdf-info p, #merge-file-info p {
+    margin: 0.5rem 0;
+}
+
+.small-instructions {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem !important;
+}
+
+#split-btn, #merge-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#split-btn:hover:not(:disabled), #merge-btn:hover:not(:disabled) {
+    background-color: var(--primary-hover-color);
+}
+
+#split-btn:disabled, #merge-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#download-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+#download-link-merge {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.download-link {
+    display: block;
+    background-color: #e9ecef;
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: background-color 0.2s;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.download-link:hover {
+    background-color: #dee2e6;
+    color: var(--primary-hover-color);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 4px solid var(--primary-color);
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 1rem auto;
+}
+
+#file-list {
+    list-style-type: none;
+    padding: 0.5rem;
+    margin: 1rem 0 0 0;
+    text-align: left;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+#file-list li {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#file-list li:last-child {
+    border-bottom: none;
+}
+
+#page-selection-list {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.page-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+    user-select: none;
+}
+
+.page-item:last-child {
+    border-bottom: none;
+}
+
+.page-item input[type="checkbox"] {
+    margin-right: 0.75rem;
+    width: 16px;
+    height: 16px;
+}
+
+.page-item label {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.drag-handle {
+    margin-left: 0.75rem;
+    cursor: grab;
+    color: #adb5bd;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.sortable-ghost {
+    opacity: 0.4;
+    background: #c8ebfb;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+    user-select: none;
+    cursor: grab;
+    gap: 1rem;
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-item:active {
+    cursor: grabbing;
+}
+
+.file-item-info {
+    flex-grow: 1;
+}
+
+.file-item-preview {
+    width: 60px;
+    flex-shrink: 0;
+}
+
+.file-item-preview canvas {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.file-item-name {
+    font-weight: 500;
+}
+
+.file-item-pages {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-left: 0.5rem;
+}
+
+.file-item-remove {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+}
+
+.file-item-remove:hover {
+    color: #a71d2a;
+}
+
+.page-preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+}
+
+.page-preview-item canvas {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

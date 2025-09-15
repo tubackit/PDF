@@ -1,0 +1,81 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Werkzeuge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="mode-switcher">
+        <button id="mode-split-btn" class="active">PDF Splitten</button>
+        <button id="mode-merge-btn">PDF Zusammenfügen</button>
+    </header>
+
+    <main class="container">
+        <div id="split-view">
+            <h1>PDF splitten</h1>
+            <p>Laden Sie eine PDF-Datei hoch, um sie in einzelne Seiten aufzuteilen.</p>
+
+            <section class="upload-section">
+                <input type="file" id="pdf-upload" accept=".pdf">
+            </section>
+
+            <section id="processing-section" class="hidden">
+                <div id="pdf-info">
+                    <p><strong>Dateiname:</strong> <span id="file-name"></span></p>
+                    <p><strong>Seitenanzahl:</strong> <span id="page-count"></span></p>
+                </div>
+                <button id="split-btn" disabled>PDF Splitten</button>
+            </section>
+
+            <section id="result-section" class="hidden">
+                <h2>Downloads</h2>
+                <div id="loader" class="loader hidden"></div>
+                <p id="preview-info" class="small-instructions hidden">Vorschau der aufgeteilten Seiten. Klicken Sie auf einen Link, um die einzelne Seite herunterzuladen.</p>
+                <div id="download-links"></div>
+            </section>
+        </div>
+
+        <div id="merge-view" class="hidden">
+            <h1>PDFs zusammenfügen</h1>
+            <p>Laden Sie die PDF-Dateien hoch, die Sie zu einer einzigen Datei zusammenfügen möchten.</p>
+            
+            <section id="upload-section-merge" class="upload-section">
+                <input type="file" id="pdf-upload-merge" accept=".pdf">
+            </section>
+
+            <section id="processing-section-merge" class="hidden">
+                 <div id="merge-file-info">
+                    <p><strong>Hochgeladene Dateien:</strong></p>
+                     <p class="small-instructions">Sie können die Reihenfolge der Dateien per Drag & Drop ändern.</p>
+                    <div id="file-list-merge"></div>
+                </div>
+                <button id="merge-btn" disabled>PDFs zusammenfügen</button>
+            </section>
+
+            <section id="result-section-merge" class="hidden">
+                <h2>Download</h2>
+                 <div id="loader-merge" class="loader hidden"></div>
+                <div id="download-link-merge"></div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script>
+        // Ensure pdfjsLib is loaded and configured properly
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+                console.log('PDF.js loaded successfully');
+            } else {
+                console.error('PDF.js failed to load');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
