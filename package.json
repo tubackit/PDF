@@ -1,0 +1,116 @@
+{
+  "name": "pdf-tools-enhanced",
+  "version": "2.0.0",
+  "description": "Professional PDF splitting and merging application with modern UI/UX",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "npx live-server --port=3000 --open=/",
+    "build": "echo 'No build step required - static files'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'No linting configured'",
+    "deploy": "echo 'Deploy to your preferred static hosting service'"
+  },
+  "keywords": [
+    "pdf",
+    "split",
+    "merge",
+    "pwa",
+    "javascript",
+    "web-app",
+    "document-processing",
+    "accessibility",
+    "dark-mode",
+    "responsive"
+  ],
+  "author": "PDF Tools Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/pdf-tools-enhanced.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/pdf-tools-enhanced/issues"
+  },
+  "homepage": "https://your-username.github.io/pdf-tools-enhanced",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  },
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": [],
+  "files": [
+    "index.html",
+    "style.css",
+    "script.js",
+    "manifest.json",
+    "sw.js",
+    "README.md"
+  ],
+  "pwa": {
+    "name": "PDF Tools",
+    "short_name": "PDF Tools",
+    "description": "Professional PDF splitting and merging",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "icons": [
+      {
+        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23007bff' rx='24'/><text x='96' y='120' font-size='80' text-anchor='middle' fill='white'>📄</text></svg>",
+        "sizes": "192x192",
+        "type": "image/svg+xml"
+      }
+    ]
+  },
+  "config": {
+    "max_file_size": "50MB",
+    "max_files": 10,
+    "supported_types": ["application/pdf"],
+    "chunk_size": "1MB",
+    "preview_scale": 0.3,
+    "thumbnail_scale": 0.5
+  },
+  "features": {
+    "dark_mode": true,
+    "pwa": true,
+    "accessibility": true,
+    "responsive": true,
+    "drag_drop": true,
+    "progress_indicators": true,
+    "error_handling": true,
+    "validation": true,
+    "keyboard_shortcuts": true,
+    "bulk_operations": true,
+    "preview": true,
+    "offline": true
+  },
+  "accessibility": {
+    "wcag_level": "AA",
+    "keyboard_navigation": true,
+    "screen_reader": true,
+    "high_contrast": true,
+    "reduced_motion": true,
+    "focus_management": true
+  },
+  "performance": {
+    "lazy_loading": true,
+    "chunked_processing": true,
+    "memory_optimization": true,
+    "web_workers": true,
+    "caching": true
+  }
+}
+

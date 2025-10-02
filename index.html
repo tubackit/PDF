@@ -1,0 +1,437 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tools - Splitten & Zusammenfügen</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="PDF-Dateien aufteilen und zusammenfügen - einfach und schnell. Kostenlose Online-PDF-Tools ohne Anmeldung.">
+    <meta name="keywords" content="PDF, splitten, zusammenfügen, aufteilen, merge, split, online, kostenlos">
+    <meta name="author" content="PDF Tools">
+    <meta name="robots" content="index, follow">
+    
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0IDJIMmEyIDIgMCAwIDAtMiAydjE2YTIgMiAwIDAgMCAyIDJoMTJhMiAyIDAgMCAwIDItMlY4bC02LTZ6IiBzdHJva2U9IiMwMDdiZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNCAydjZoNiIgc3Ryb2tlPSIjMDA3YmZmIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMTQgMkgyYTIgMiAwIDAgMC0yIDJ2MTZhMiAyIDAgMCAwIDIgMmgxMmEyIDIgMCAwIDAgMi0yVjhsLTYtNnoiIHN0cm9rZT0iIzAwN2JmZiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE0IDJ2Nmg2IiBzdHJva2U9IiMwMDdiZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==">
+    
+    <!-- PWA Theme -->
+    <meta name="theme-color" content="#007bff">
+    <meta name="msapplication-TileColor" content="#007bff">
+    
+    <!-- PWA Status Bar -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="PDF Tools">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Toast notification container -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    
+    <!-- Top controls -->
+    <div class="top-controls">
+        <!-- Developer credit -->
+        <div class="developer-credit">
+            <span>Erstellt von <strong>T.Tubacki</strong></span>
+        </div>
+        
+        <!-- Dark mode toggle -->
+        <button id="dark-mode-toggle" class="dark-mode-toggle" title="Dark Mode umschalten">
+            <span class="dark-mode-icon">🌙</span>
+        </button>
+        
+        <!-- Install button (hidden by default) -->
+        <button id="install-app-btn" class="install-btn hidden" title="App installieren">
+            <span class="install-icon">📱</span>
+        </button>
+    </div>
+
+    <!-- Marquee Text -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span class="marquee-text">🎉 Viel Spaß mit der Software, ich hoffe sie erleichtert dir deine Arbeit. Für jede Idee zu Verbesserung gerne per Email an tubackit@gmail.com 💌</span>
+        </div>
+    </div>
+
+    <header class="mode-switcher">
+        <button id="mode-split-btn" class="active" aria-describedby="split-desc">
+            <span class="mode-icon">✂️</span>
+            <span class="mode-text">PDF Splitten</span>
+            <span id="split-desc" class="sr-only">PDF-Dateien in einzelne Seiten aufteilen</span>
+        </button>
+        <button id="mode-merge-btn" aria-describedby="merge-desc">
+            <span class="mode-icon">🔗</span>
+            <span class="mode-text">PDF Zusammenfügen</span>
+            <span id="merge-desc" class="sr-only">Mehrere PDF-Dateien zu einer zusammenfügen</span>
+        </button>
+        <button id="mode-sign-btn" aria-describedby="sign-desc">
+            <span class="mode-icon">✍️</span>
+            <span class="mode-text">PDF Signieren</span>
+            <span id="sign-desc" class="sr-only">PDF-Dateien mit digitaler Unterschrift versehen</span>
+        </button>
+    </header>
+
+    <main class="container">
+        
+        <div id="split-view">
+            <h1 id="main-content">PDF splitten</h1>
+            <p>Laden Sie eine PDF-Datei hoch, um sie in einzelne Seiten aufzuteilen.</p>
+            
+            <!-- PDF Splitting Illustration -->
+            <div class="pdf-splitting-illustration">
+                <div class="illustration-container">
+                    <div class="large-pdf-icon">
+                        <div class="pdf-document">
+                            <div class="pdf-corner"></div>
+                            <div class="pdf-lines">
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                            </div>
+                            <div class="pdf-banner">PDF</div>
+                        </div>
+                        <div class="scissors-icon">✂️</div>
+                        <div class="cut-line"></div>
+                    </div>
+                    <div class="split-arrows">
+                        <div class="arrow">→</div>
+                        <div class="arrow">→</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    <div class="small-pdf-icons">
+                        <div class="small-pdf-icon">
+                            <div class="pdf-document small">
+                                <div class="pdf-corner"></div>
+                                <div class="pdf-lines">
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                </div>
+                                <div class="pdf-banner">PDF</div>
+                            </div>
+                        </div>
+                        <div class="small-pdf-icon">
+                            <div class="pdf-document small">
+                                <div class="pdf-corner"></div>
+                                <div class="pdf-lines">
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                </div>
+                                <div class="pdf-banner">PDF</div>
+                            </div>
+                        </div>
+                        <div class="small-pdf-icon">
+                            <div class="pdf-document small">
+                                <div class="pdf-corner"></div>
+                                <div class="pdf-lines">
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                </div>
+                                <div class="pdf-banner">PDF</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="upload-section">
+                <div class="upload-area" id="upload-area-split" 
+                     role="button" 
+                     tabindex="0" 
+                     aria-label="PDF-Datei hochladen zum Aufteilen"
+                     aria-describedby="upload-hint-split">
+                    <div class="upload-content">
+                        <div class="upload-icon" aria-hidden="true">📄</div>
+                        <p class="upload-text">PDF-Datei hier ablegen oder <span class="upload-link">klicken zum Auswählen</span></p>
+                        <p class="upload-hint" id="upload-hint-split">Maximale Dateigröße: 50MB</p>
+                    </div>
+                </div>
+                <input type="file" id="pdf-upload" accept=".pdf" class="hidden" aria-label="PDF-Datei auswählen">
+            </section>
+
+            <section id="processing-section" class="hidden">
+                <div id="pdf-info">
+                    <p><strong>Dateiname:</strong> <span id="file-name"></span></p>
+                    <p><strong>Seitenanzahl:</strong> <span id="page-count"></span></p>
+                </div>
+                
+                <!-- Page selection for splitting -->
+                <div id="page-selection" class="hidden">
+                    <h3>Seiten auswählen</h3>
+                    <div class="selection-controls" role="group" aria-label="Seitenauswahl-Steuerung">
+                        <button id="select-all-pages" class="btn-secondary" aria-label="Alle Seiten auswählen">Alle auswählen</button>
+                        <button id="select-none-pages" class="btn-secondary" aria-label="Keine Seiten auswählen">Keine auswählen</button>
+                        <button id="select-odd-pages" class="btn-secondary" aria-label="Nur ungerade Seiten auswählen">Ungerade</button>
+                        <button id="select-even-pages" class="btn-secondary" aria-label="Nur gerade Seiten auswählen">Gerade</button>
+                    </div>
+                    <div id="page-selection-list" class="page-selection-list"></div>
+                </div>
+                
+                <!-- Progress indicator for splitting -->
+                <div id="progress-container" class="hidden">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-text" class="progress-text">Verarbeitung läuft...</p>
+                </div>
+                
+                <button id="split-btn" disabled aria-describedby="split-status">PDF Splitten</button>
+                <div id="split-status" class="sr-only" aria-live="polite"></div>
+            </section>
+
+            <section id="result-section" class="hidden">
+                <h2>Downloads</h2>
+                <div id="loader" class="loader hidden"></div>
+                
+                <!-- Bulk download button -->
+                <div id="bulk-download-section" class="bulk-download-section hidden">
+                    <button id="download-all-btn" class="download-all-btn">
+                        <span class="download-icon">📦</span>
+                        <span class="download-text">Alle Seiten als ZIP herunterladen</span>
+                    </button>
+                </div>
+                
+                <p id="preview-info" class="small-instructions hidden">Vorschau der aufgeteilten Seiten. Klicken Sie auf einen Link, um die einzelne Seite herunterzuladen.</p>
+                <div id="download-links"></div>
+            </section>
+        </div>
+
+        <div id="merge-view" class="hidden">
+            <h1>PDFs zusammenfügen</h1>
+            <p>Laden Sie die PDF-Dateien hoch, die Sie zu einer einzigen Datei zusammenfügen möchten.</p>
+            
+            <!-- PDF Merging Illustration -->
+            <div class="pdf-merging-illustration">
+                <div class="illustration-container">
+                    <div class="small-pdf-icons">
+                        <div class="small-pdf-icon">
+                            <div class="pdf-document small">
+                                <div class="pdf-corner"></div>
+                                <div class="pdf-lines">
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                </div>
+                                <div class="pdf-banner">PDF</div>
+                            </div>
+                        </div>
+                        <div class="small-pdf-icon">
+                            <div class="pdf-document small">
+                                <div class="pdf-corner"></div>
+                                <div class="pdf-lines">
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                </div>
+                                <div class="pdf-banner">PDF</div>
+                            </div>
+                        </div>
+                        <div class="small-pdf-icon">
+                            <div class="pdf-document small">
+                                <div class="pdf-corner"></div>
+                                <div class="pdf-lines">
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                    <div class="pdf-line"></div>
+                                </div>
+                                <div class="pdf-banner">PDF</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="merge-arrows">
+                        <div class="arrow">↓</div>
+                        <div class="arrow">↓</div>
+                        <div class="arrow">↓</div>
+                    </div>
+                    <div class="merge-icon">
+                        <div class="merge-symbol">🔗</div>
+                        <div class="merge-text">Zusammenfügen</div>
+                    </div>
+                    <div class="merge-arrow">
+                        <div class="arrow">→</div>
+                    </div>
+                    <div class="large-pdf-icon">
+                        <div class="pdf-document">
+                            <div class="pdf-corner"></div>
+                            <div class="pdf-lines">
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                                <div class="pdf-line"></div>
+                            </div>
+                            <div class="pdf-banner">PDF</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <section id="upload-section-merge" class="upload-section">
+                <div class="upload-area" id="upload-area-merge"
+                     role="button" 
+                     tabindex="0" 
+                     aria-label="PDF-Dateien hochladen zum Zusammenfügen"
+                     aria-describedby="upload-hint-merge">
+                    <div class="upload-content">
+                        <div class="upload-icon" aria-hidden="true">📚</div>
+                        <p class="upload-text">PDF-Dateien hier ablegen oder <span class="upload-link">klicken zum Auswählen</span></p>
+                        <p class="upload-hint" id="upload-hint-merge">Mehrere Dateien möglich • Maximale Dateigröße: 50MB pro Datei</p>
+                    </div>
+                </div>
+                <input type="file" id="pdf-upload-merge" accept=".pdf" multiple class="hidden" aria-label="PDF-Dateien auswählen">
+            </section>
+
+            <section id="processing-section-merge" class="hidden">
+                 <div id="merge-file-info">
+                    <p><strong>Hochgeladene Dateien:</strong></p>
+                     <p class="small-instructions">Sie können die Reihenfolge der Dateien per Drag & Drop ändern.</p>
+                    <div id="file-list-merge"></div>
+                </div>
+                
+                <!-- Progress indicator for merging -->
+                <div id="progress-container-merge" class="hidden">
+                    <div class="progress-bar">
+                        <div id="progress-fill-merge" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-text-merge" class="progress-text">Zusammenfügung läuft...</p>
+                </div>
+                
+                <button id="merge-btn" disabled>PDFs zusammenfügen</button>
+            </section>
+
+            <section id="result-section-merge" class="hidden">
+                <h2>Download</h2>
+                 <div id="loader-merge" class="loader hidden"></div>
+                <div id="download-link-merge"></div>
+            </section>
+        </div>
+
+        <div id="sign-view" class="hidden">
+            <h1>PDF Signieren</h1>
+            <p>Laden Sie eine PDF-Datei hoch und fügen Sie Ihre digitale Unterschrift hinzu.</p>
+            
+            <!-- PDF Signing Illustration -->
+            <div class="pdf-signing-illustration">
+                <div class="illustration-container">
+                    <div class="pdf-document">
+                        <div class="pdf-corner"></div>
+                        <div class="pdf-lines">
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line"></div>
+                        </div>
+                        <div class="signature-area">
+                            <div class="signature-line"></div>
+                            <div class="signature-text">Unterschrift</div>
+                        </div>
+                        <div class="pdf-banner">PDF</div>
+                    </div>
+                    <div class="sign-arrow">
+                        <div class="arrow">✍️</div>
+                    </div>
+                    <div class="signed-pdf-document">
+                        <div class="pdf-corner"></div>
+                        <div class="pdf-lines">
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line"></div>
+                        </div>
+                        <div class="signature-area signed">
+                            <div class="signature-line"></div>
+                            <div class="signature-text signed">✓ Signiert</div>
+                        </div>
+                        <div class="pdf-banner">PDF</div>
+                    </div>
+                </div>
+            </div>
+            
+            <section class="upload-section">
+                <div class="upload-area" id="upload-area-sign"
+                     role="button" 
+                     tabindex="0" 
+                     aria-label="PDF-Datei hochladen zum Signieren"
+                     aria-describedby="upload-hint-sign">
+                    <div class="upload-content">
+                        <div class="upload-icon" aria-hidden="true">📄</div>
+                        <p class="upload-text">PDF-Datei hier ablegen oder <span class="upload-link">klicken zum Auswählen</span></p>
+                        <p class="upload-hint" id="upload-hint-sign">Maximale Dateigröße: 50MB</p>
+                    </div>
+                </div>
+                <input type="file" id="pdf-upload-sign" accept=".pdf" class="hidden" aria-label="PDF-Datei auswählen">
+            </section>
+
+            <section id="processing-section-sign" class="hidden">
+                <div id="pdf-info-sign">
+                    <p><strong>Dateiname:</strong> <span id="file-name-sign"></span></p>
+                    <p><strong>Seitenanzahl:</strong> <span id="page-count-sign"></span></p>
+                </div>
+                
+                <!-- PDF Preview -->
+                <div id="pdf-preview-section" class="pdf-preview-section">
+                    <h3>PDF Vorschau - Klicken Sie auf die Stelle wo Sie signieren möchten</h3>
+                    <div id="pdf-preview-container">
+                        <canvas id="pdf-preview-canvas"></canvas>
+                    </div>
+                    <p class="preview-hint">Klicken Sie auf die gewünschte Position in der PDF-Vorschau</p>
+                </div>
+                
+                <!-- Signature Canvas -->
+                <div id="signature-section" class="signature-section hidden">
+                    <h3>Unterschrift hinzufügen</h3>
+                    <div class="signature-controls">
+                        <button id="clear-signature" class="btn-secondary">Löschen</button>
+                        <button id="undo-signature" class="btn-secondary">Rückgängig</button>
+                    </div>
+                    <canvas id="signature-canvas" width="600" height="200"></canvas>
+                    <p class="signature-hint">Zeichnen Sie Ihre Unterschrift in das Feld oben</p>
+                </div>
+                
+                <!-- Progress indicator for signing -->
+                <div id="progress-container-sign" class="hidden">
+                    <div class="progress-bar">
+                        <div id="progress-fill-sign" class="progress-fill"></div>
+                    </div>
+                    <p id="progress-text-sign" class="progress-text">PDF wird signiert...</p>
+                </div>
+                
+                <button id="sign-btn" disabled class="hidden">PDF Signieren</button>
+                <div id="sign-status" class="sr-only" aria-live="polite"></div>
+            </section>
+
+            <section id="result-section-sign" class="hidden">
+                <h2>Signierte PDF</h2>
+                <div id="loader-sign" class="loader hidden"></div>
+                <div id="download-link-sign"></div>
+            </section>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        // Ensure pdfjsLib is loaded and configured properly
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof pdfjsLib !== 'undefined') {
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+                console.log('PDF.js loaded successfully');
+            } else {
+                console.error('PDF.js failed to load');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
